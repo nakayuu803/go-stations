@@ -8,8 +8,8 @@ type (
 		ID          int       `json:"id"`
 		Subject     string    `json:"subject"`
 		Description string    `json:"description"`
-		CreatedAt   time.Time `json:"creat_at"`
-		UpdatedAt   time.Time `json:"update_at"`
+		CreatedAt   time.Time `json:"-"`
+		UpdatedAt   time.Time `json:"-"`
 	}
 
 	// A CreateTODORequest expresses ...
