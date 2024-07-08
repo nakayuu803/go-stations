@@ -64,7 +64,7 @@ func (h *TODOHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if req.ID == 0 {
-			http.Error(w, "Subject is empty", http.StatusBadRequest)
+			http.Error(w, "ID is empty", http.StatusBadRequest)
 			return
 		}
 		if req.Subject == `` {
@@ -80,6 +80,7 @@ func (h *TODOHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 		if todo == nil {
 			http.Error(w, "Id not found", http.StatusNotFound)
+			return
 		}
 
 		resp := model.UpdateTODOResponse{
