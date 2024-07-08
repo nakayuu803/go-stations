@@ -54,6 +54,37 @@ func (h *TODOHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 		return
 	}
+	// if r.Method == http.MethodPut {
+	// 	var req *model.UpdateTODORequest
+
+	// 	err := json.NewDecoder(r.Body).Decode(&req)
+	// 	if err != nil {
+	// 		http.Error(w, "Invalid request payload", http.StatusBadRequest)
+	// 		return
+	// 	}
+
+	// 	if req.Subject == `` {
+	// 		http.Error(w, "Subject is empty", http.StatusBadRequest)
+	// 		return
+	// 	}
+
+	// 	ctx := r.Context()
+	// 	todo, err := h.svc.UpdateTODO(ctx, req.ID, req.Subject, req.Description)
+	// 	if err != nil {
+	// 		http.Error(w, "Failed to create TODO", http.StatusInternalServerError)
+	// 		return
+	// 	}
+
+	// 	resp := model.UpdateTODOResponse{
+	// 		TODO: *todo,
+	// 	}
+
+	// 	w.Header().Set("Content-Type", "application/json")
+	// 	w.WriteHeader(http.StatusOK)
+	// 	json.NewEncoder(w).Encode(resp)
+
+	// 	return
+	// }
 }
 
 // Create handles the endpoint that creates the TODO.

@@ -3,7 +3,7 @@ package model
 import "fmt"
 
 type ErrNotFound struct {
-	ID int
+	ID int64
 }
 
 func (e ErrNotFound) Error() string {
