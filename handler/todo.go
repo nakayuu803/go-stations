@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
+	"strconv"
 
 	"github.com/TechBowl-japan/go-stations/model"
 	"github.com/TechBowl-japan/go-stations/service"
@@ -85,6 +86,40 @@ func (h *TODOHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 		resp := model.UpdateTODOResponse{
 			TODO: *todo,
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		json.NewEncoder(w).Encode(resp)
+
+		return
+	}
+	if r.Method == http.MethodGet {
+		query := r.URL.Query()
+		prevID, err := strconv.ParseInt((query.Get("prev_id")), 10, 64)
+		if err != nil && query.Get("prev_id") != "" {
+			http.Error(w, "prevID is empty", http.StatusBadRequest)
+			return
+		}
+		size, err := strconv.ParseInt((query.Get("size")), 10, 64)
+		if err != nil && query.Get("size") != "" {
+			http.Error(w, "size is empty", http.StatusBadRequest)
+			return
+		}
+		req := model.ReadTODORequest{
+			PrevID: prevID,
+			Size:   size,
+		}
+
+		ctx := r.Context()
+		todos, err := h.svc.ReadTODO(ctx, req.PrevID, req.Size)
+		if err != nil {
+			http.Error(w, "Failed to read TODOs", http.StatusInternalServerError)
+			return
+		}
+
+		resp := model.ReadTODOResponse{
+			TODOs: todos,
 		}
 
 		w.Header().Set("Content-Type", "application/json")
